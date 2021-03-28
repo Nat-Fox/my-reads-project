@@ -1,5 +1,5 @@
 import React from 'react';
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css';
 import Header from './Header';
 import SearchBook from './SearchBook';
@@ -45,14 +45,27 @@ class BooksApp extends React.Component {
       title: 'The Adventures of Tom Sawyer',
       author: 'Mark Twain',
       url: 'http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api'
-    }]
+    }],
+    books: []
+  }
+
+  componentDidMount () {
+    BooksAPI.getAll()
+      .then((books) => {
+        this.setState(() => ({
+          books
+        }))
+      })
   }
 
   render() {
     return (
       <div className='app'>
         {this.state.showSearchPage ? (
-          <SearchBook showSearchPage={() => this.setState({ showSearchPage: false })} />
+          <SearchBook
+            showSearchPage={() => this.setState({ showSearchPage: false })}
+            books={this.state.books}
+          />
         ) : (
           <div>
             <Header />
