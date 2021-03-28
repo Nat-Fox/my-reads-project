@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class ListBook extends React.Component {
   render() {
@@ -38,7 +39,11 @@ class ListBook extends React.Component {
           </div>
         </div>
         <div className="open-search">
-          <button onClick={this.props.showSearchPage}>Add a book</button>
+          <Link
+            to='/search'
+            onClick={this.props.showSearchPage}>
+            <button>Add a book</button>
+          </Link>
         </div>
       </div >
     )

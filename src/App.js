@@ -4,6 +4,7 @@ import './App.css';
 import Header from './Header';
 import SearchBook from './SearchBook';
 import ListBook from './ListBook';
+import { Route } from 'react-router-dom';
 
 
 class BooksApp extends React.Component {
@@ -18,7 +19,7 @@ class BooksApp extends React.Component {
     books: []
   }
 
-  componentDidMount () {
+  componentDidMount() {
     BooksAPI.getAll()
       .then((books) => {
         this.setState(() => ({
@@ -30,21 +31,51 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className='app'>
-        {this.state.showSearchPage ? (
-          <SearchBook
-            showSearchPage={() => this.setState({ showSearchPage: false })}
-            books={this.state.books}
-          />
-        ) : (
+        <Route exact path='/' render={() => (
           <div>
             <Header />
-            <ListBook 
+            <ListBook
               showSearchPage={() => this.setState({ showSearchPage: true })}
               title='Currently Reading'
               books={this.state.books}
               status='currentlyReading'
             />
-            <ListBook 
+            <ListBook
+              showSearchPage={() => this.setState({ showSearchPage: true })}
+              title='Want to Read'
+              books={this.state.books}
+              status='wantToRead'
+            />
+            <ListBook
+              showSearchPage={() => this.setState({ showSearchPage: true })}
+              title='Read'
+              books={this.state.books}
+              status='read'
+            />
+          </div>
+        )}></Route>
+
+        <Route exact path='/search' render={() => (
+          <SearchBook books={this.state.books} />
+        )}>
+
+        </Route>
+
+        {/* {this.state.showSearchPage ? (
+          <SearchBook
+            // showSearchPage={() => this.setState({ showSearchPage: false })}
+            books={this.state.books}
+          />
+        ) : (
+          <div>
+            <Header />
+            <ListBook
+              showSearchPage={() => this.setState({ showSearchPage: true })}
+              title='Currently Reading'
+              books={this.state.books}
+              status='currentlyReading'
+            />
+            <ListBook
               showSearchPage={() => this.setState({ showSearchPage: true })}
               title='Want to Read'
               books={this.state.books}
@@ -58,7 +89,7 @@ class BooksApp extends React.Component {
             />
           </div>
         )
-        }
+        } */}
       </div>
     )
   }
