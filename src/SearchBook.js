@@ -1,9 +1,11 @@
 import React from 'react';
+import * as BooksAPI from './BooksAPI';
 
 class SearchBook extends React.Component {
 
   state = {
-    book: ''
+    book: '',
+
   }
 
   update = (book) => {
@@ -12,9 +14,19 @@ class SearchBook extends React.Component {
     }))
   }
 
+  componentDidMount () {
+    BooksAPI.search('Journey')
+      .then((books) => {
+        console.log('books ->', books)
+        // this.setState(() => ({
+        //   books
+        // }))
+      })
+  }
+
   render() {
 
-
+    console.log('books', this.props.books)
 
     const showingBooks = this.state.book === ''
       ? []
