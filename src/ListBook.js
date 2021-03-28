@@ -35,6 +35,9 @@ class ListBook extends React.Component {
             </div>
           </div>
         </div>
+        <div className="open-search">
+          <button onClick={this.props.showSearchPage}>Add a book</button>
+        </div>
       </div >
     )
   }
