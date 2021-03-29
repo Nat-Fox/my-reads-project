@@ -1,7 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as BooksAPI from './BooksAPI';
 
 class ListBook extends React.Component {
+
+  statusChange = (book) => {
+    return (e) => {
+      let shelf = e.target.value;
+      BooksAPI.update(book, shelf)
+        .then((updateBook) => {
+          this.props.handlerStatusChange(book, shelf)
+        })
+        .catch((error) => {
+          console.log('error', error)
+        })
+    }    
+  };
+
   render() {
     return (
       <div className="list-books">
@@ -18,7 +33,7 @@ class ListBook extends React.Component {
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                              <select>
+                              <select value={book.shelf} onChange={this.statusChange(book)}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>

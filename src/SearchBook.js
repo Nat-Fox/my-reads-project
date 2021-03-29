@@ -2,6 +2,7 @@ import React from 'react';
 import * as BooksAPI from './BooksAPI';
 import { Link } from 'react-router-dom';
 
+
 class SearchBook extends React.Component {
 
   state = {
@@ -26,7 +27,7 @@ class SearchBook extends React.Component {
   }
 
   render() {
-    var showBooks = (this.state.showBooks || []).map((book, key) => {
+    var showBooks = (Array.isArray(this.state.showBooks) ? this.state.showBooks : []).map((book, key) => {
       return <li key={key}>
         <div className="book">
           <div className="book-top">
