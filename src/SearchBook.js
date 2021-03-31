@@ -13,13 +13,13 @@ class SearchBook extends React.Component {
       () => ({
         book: book.trim(),
       }),
-      this.searchBook(this.state.book)
+      () => this.searchBook(this.state.book)
     );
   };
 
   searchBook = () => {
     BooksAPI.search(this.state.book).then((books) => {
-      if (books) {
+      if (books !== undefined && books.length) {
         var bookWithShelf = books.map((currentBook) => {
           var foundBook = this.props.books.find(
             (book) => currentBook.id === book.id
@@ -32,6 +32,10 @@ class SearchBook extends React.Component {
 
         this.setState(() => ({
           showBooks: bookWithShelf,
+        }));
+      } else {
+        this.setState(() => ({
+          showBooks: [],
         }));
       }
     });
@@ -64,7 +68,7 @@ class SearchBook extends React.Component {
                 style={{
                   width: 128,
                   height: 193,
-                  backgroundImage: `url(${book.imageLinks.thumbnail})`,
+                  backgroundImage: `url(${book.imageLinks ? book.imageLinks.thumbnail : '' } )`
                 }}
               ></div>
               <div className="book-shelf-changer">
